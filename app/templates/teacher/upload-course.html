@@ -1,0 +1,94 @@
+{% extends 'teacher/base-teacher.html' %}
+{% block content %}
+<section class="holder">
+    <div class="container">
+        <h2>Create Course</h2>
+        <form id="courseForm">
+            <div class="form first">
+                <div class="details personal">
+                    <span class="title">Course Details</span>
+                    <div class="fields">
+                        <div class="input-field">
+                            <label for="course-title">Course Title</label>
+                            <input type="text" id="course-title" name="course_title" placeholder="Enter course title" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="course-description">Course Description</label>
+                            <textarea id="course-description" name="course_description" placeholder="Enter course description" required></textarea>
+                        </div>
+                        <div class="input-field">
+                            <label for="instructor-id">Instructor ID</label>
+                            <input type="text" id="instructor-id" name="instructor_id" placeholder="Enter your Instructor ID" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="modules">Modules</label>
+                            <textarea id="modules" name="modules" placeholder="Enter course modules, separated by commas" required></textarea>
+                        </div>
+
+                        <div class="input-field">
+                            <label for="course-link">Link to The Course</label>
+                            <input type="text" id="link" name="course_link" placeholder="Enter link to Course" required>
+                        </div>
+                    </div>
+                    <div class="buttons">
+                        <button type="reset" class="backBtn">
+                            <i class="uil uil-times-circle"></i>
+                            <span class="btnText">Cancel Entry</span>
+                        </button>
+                        <button type="submit" class="submitBtn" id="submitBtn">
+                            <span class="btnText">Submit</span>
+                            <i class="uil uil-check-circle"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('courseForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Gather form data
+            const formData = {
+                title: document.getElementById('course-title').value,
+                description: document.getElementById('course-description').value,
+                instructor: document.getElementById('instructor-id').value,
+                students_enrolled: [],
+                lessons: document.getElementById('modules').value.split(',').map(module => module.trim()),
+                embed_link:document.getElementById('link').value
+            };
+
+            // Post data as JSON
+            fetch("/api/v1/post_courses", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Show SweetAlert confirmation message
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Course Submitted!',
+                    text: 'Redirecting to Home Page...',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Submission Failed',
+                    text: 'Please try again later.'
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

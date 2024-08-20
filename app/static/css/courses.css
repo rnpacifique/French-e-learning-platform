@@ -1,0 +1,61 @@
+/* Modern table styling */
+table {
+    margin-top: 30px;
+    border-collapse: collapse;
+    width: 100%;
+    font-family: Arial, sans-serif;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+td:last-child {
+    text-align: left;
+    width: 120px; /* Adjust the width as needed */
+}
+
+.enroll-button {
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.confirmation {
+    display: none;
+}
+
+#view-button {
+    background-color: #0A2558;
+    color: white;
+    height: 20px;
+    width: auto;
+    /* border: none; */
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    /* font-weight: bold; */
+    margin: 20px;
+    border-radius: 10px;
+}
+
+#view-button:hover {
+    background-color: #3A4C9C;
+    color: white;
+}
+
+#view-button a {
+    color: white;
+    text-decoration: none;
+}

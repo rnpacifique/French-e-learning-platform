@@ -1,0 +1,30 @@
+{% extends 'teacher/base-teacher.html' %}
+
+{% block content %}
+    <h1>Courses Dashboard</h1>
+    <p>This is your dashboard where you can manage your classes, and more.</p>
+
+    {% if user_courses %}
+
+    <table class="table" style="width: 60%;">
+        <thead>
+          <tr>
+            <th scope="col" style="width: 30%;">Course ID</th>
+            <th scope="col" style="width: 30%;">Course Description</th>
+            <th scope="col" style="width: 30%;">Course Name</th>
+          </tr>
+        </thead>
+        {% for course in user_courses %}
+        <tbody>
+          <tr>
+            <th>{{ course._id }}</th>
+            <td>{{ course.description }}</td>
+            <td>{{ course.title }}</td>
+          </tr>
+        </tbody>
+        {% endfor %}
+    {% else %}
+      <p>You have not created to any courses. Click on the new courses tab to upload a course.</p>
+    {% endif %}
+      </table>
+{% endblock %}

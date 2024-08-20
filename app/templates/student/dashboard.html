@@ -1,0 +1,68 @@
+{%extends 'student/base.html' %}
+{%block content%}
+            <h3>Learning Summary</h3>
+            <p>Welcome {{ name }}</p>
+            {% if courses %}
+                <h3>Enrolled courses</h3>
+
+                <table class="table" style="width: 60%;">
+                    <thead>
+                      <tr>
+                        <th scope="col">Course Name</th>
+                        <th scope="col">Course Description</th>
+                        <th scope="col">Course ID</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for course in courses %}
+                      <tr>
+                        <th scope="row">{{ course.title }}</th>
+                        <td>{{course.description}}</td>
+                        <td>{{course._id}}</td>
+                        <td><a href="{{ url_for('main.learning') }}" onclick="storeCourseDetails('{{ course.title }}', '{{ course.description }}', '{{ course._id }}', '{{ course.src }}', '{{ user_email }}')">View</a></td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+
+                <!-- for student marks -->
+                {% if courses_marks %}
+                <h3>Test Results</h3>
+                <table class="table" table id="myTable" style="width: 60%;">
+                    <thead>
+                      <tr>
+                        <th scope="col">Course Name</th>
+                        <th scope="col">Marks /10</th>
+                      </tr>
+                    </thead>
+                    
+                    <tbody>
+                        {% for course_mark in courses_marks %}
+                        <tr>
+                             <td>{{ course_mark.course.title }}</td>
+                             <td>{{course_mark.marks}}</td>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                    <p>You have not taken any tests yet. Click on the courses tab to enroll to one of our courses.</p>
+                {% endif %}
+            {% else %}
+                <p>You have not enrolled to any courses. Click on the courses tab to enroll to one of our courses.</p>
+            {% endif %}
+        </div>
+    </div>
+<script>
+    function storeCourseDetails(title, description, id, src, user_email) {
+        sessionStorage.setItem('courseTitle', title);
+        sessionStorage.setItem('courseDescription', description);
+        sessionStorage.setItem('courseId', id);
+        sessionStorage.setItem('src', src);
+        sessionStorage.setItem('userEmail', user_email);	
+
+        console.log('this is the user email', user_email);
+        console.log(id);
+    }
+</script>
+{% endblock %}

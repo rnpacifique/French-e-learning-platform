@@ -1,0 +1,73 @@
+body {
+    background-color: #f8f9fa;
+  }
+  .sidebar {
+    background-color: #343a40;
+    color: white;
+    height: 100vh;
+    padding: 20px;
+  }
+  .sidebar .nav-link {
+    color: #adb5bd;
+    transition: color 0.3s;
+  }
+  .sidebar .nav-link:hover {
+    color: #ffffff;
+    background-color: #495057;
+  }
+  .sidebar .nav-link.active {
+    color: #ffffff;
+    background-color: #0A2558;
+  }
+  .sidebar .nav-link .bi, .sidebar .nav-link .fa {
+    margin-right: 10px;
+  }
+  .sidebar .nav-item {
+    margin-bottom: 1rem;
+  }
+  .sidebar .nav-header {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  .main-content {
+    padding: 20px;
+  }
+  .profile-header {
+    background: #0A2558;
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+  }
+  .profile-header .avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 5px solid white;
+    margin-bottom: 15px;
+  }
+  .profile-header .name {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  .profile-header .bio {
+    font-size: 1rem;
+    color: #d1d1d1;
+  }
+  .info-section {
+    margin-top: 20px;
+  }
+  .info-section .info-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+  .info-section .info-item .edit-btn {
+    cursor: pointer;
+    color: #0A2558;
+    font-size: 0.9rem;
+  }
+  .info-section .info-item .edit-btn:hover {
+    text-decoration: underline;
+  }

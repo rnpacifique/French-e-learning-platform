@@ -1,0 +1,43 @@
+{% extends "teacher/base-teacher.html" %}
+{% block content %}
+    <h1>Welcome, Teacher!</h1>
+    <p>This is your dashboard where you can manage your classes, view student progress, and more.</p>
+    {% if my_students %}
+        <table class="table" style="width: 60%;">
+            <div id="table">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width: 25%;">Student ID</th>
+                        <th scope="col" style="width: 25%;">Student Full Name</th>
+                        <th scope="col" style="width: 25%;">Course Taken</th>
+                        <th scope="col" style="width: 25%;">Marks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for my_student in my_students %}
+                        <tr>
+                            <th scope="row">{{ my_student._id }}</th>
+                            <td>{{ my_student.name }}</td>
+                            <td>
+                                {% for course_name in course_names %}
+                                    {% if course_name._id in my_student.courses %}
+                                        {{ course_name.title }}
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% for course_name in course_names %}
+                                    {% if course_name._id in my_student.courses %}
+                                        {{ course_name.marks }}
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </div>
+        </table>
+    {% else %}
+        <p>You have no students yet.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,224 @@
+{%extends 'student/base.html' %}
+
+{% block content %}
+<div class="card"  id="big-table">
+    <div class="card-header" >
+        <h3>Courses</h3>
+    </div>
+    <div class="card-body">
+        <div class="container">
+        {% if courses %}
+            <h2>Enrolled courses</h2>
+            <table class="table" table id="myTable" style="width: 60%;">
+                <thead>
+                  <tr>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">Course <br> Description</th>
+                    <th scope="col">Course ID</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for course in courses %}
+                        <tr>
+                            <td>{{ course.title }}</td>
+                            <td>{{course.description}}</td>
+                            <td>{{course._id}}</td>
+                            <td>              
+                                <button class="enroll-button">Enroll</button>
+                                <span class="confirmation">
+                                    <form  method="POST" action="{{ url_for('main.courses') }}">
+                                            <span>Re-enter your email and course ID to confirm</span><br>
+                                            <label for="email">Email:</label><br>
+                                            <input type="email" id="email" name="email" size="32"><br>
+                                            <label for="email">Course ID:</label><br>
+                                            <input type="text" id="course_id" name="course_id" size="32"><br>
+                                            <button class="confirm">✓</button>
+                                            <button class="cancel-button">❌</button> 
+                                        
+                                    </form>
+                                </span>
+                            </td>
+                            
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>            
+        {% else %}
+            <p>No courses found</p>
+        {% endif %}
+    </div>
+</div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.enroll-button').forEach(function(button) {
+          button.addEventListener('click', function() {
+            const confirmation = this.nextElementSibling;
+            confirmation.style.display = 'block';
+          });
+        });
+      
+        document.querySelectorAll('.cancel-button').forEach(function(button) {
+          button.addEventListener('click', function() {
+            const confirmation = this.closest('.confirmation');
+            confirmation.style.display = 'none';
+          });
+        });
+      
+        document.querySelectorAll('.confirm').forEach(function(button) {
+          button.addEventListener('click', function(event) {
+            event.preventDefault();
+      
+            const email = this.closest('form').querySelector('#email').value;
+            const courseId = this.closest('form').querySelector('#course_id').value;
+      
+            if (!email || !courseId) {
+              Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: 'Please enter both your email and course ID.',
+              });
+              return;
+            }
+      
+            addCourseToUser(email, courseId);
+          });
+        });
+      
+        async function addCourseToUser(email, courseId) {
+          const data = {
+            email: email,
+            course_id: courseId
+          };
+      
+          try {
+            const response = await fetch('http://127.0.0.1:5001/api/v1/post_courses_to_user', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data),
+            });
+      
+            if (!response.ok) {
+              const errorData = await response.json();document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('.enroll-button').forEach(function(button) {
+                  button.addEventListener('click', function() {
+                    const confirmation = this.nextElementSibling;
+                    confirmation.style.display = 'block';
+                  });
+                });
+              
+                document.querySelectorAll('.cancel-button').forEach(function(button) {
+                  button.addEventListener('click', function() {
+                    const confirmation = this.closest('.confirmation');
+                    confirmation.style.display = 'none';
+                  });
+                });
+              
+                document.querySelectorAll('.confirm').forEach(function(button) {
+                  button.addEventListener('click', async function(event) {
+                    event.preventDefault();
+              
+                    const email = this.closest('form').querySelector('#email').value;
+                    const courseId = this.closest('form').querySelector('#course_id').value;
+              
+                    if (!email || !courseId) {
+                      Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'Please enter both your email and course ID.',
+                      });
+                      return;
+                    }
+              
+                    try {
+                      const response = await addCourseToUser(email, courseId);
+                      if (response && response.success) {
+                          Swal.fire({
+                          icon: 'success',
+                          title: 'Course Added Successfully.',
+                          text: 'Course Added! Go to Dashoboard to view your course.',
+                        }).then(() => {
+                          // Redirect or perform further actions as needed
+                          window.location.href = '{{url_for("main.dashboard")}}';
+                        });
+                      } else {
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Error',
+                          text: 'Failed to add course. Please try again later.',
+                        });
+                      }
+                    } catch (error) {
+                      console.error('Error adding course:', error);
+                      Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error adding course.',
+                      });
+                    }
+                  });
+                });
+              
+                async function addCourseToUser(email, courseId) {
+                  const data = {
+                    email: email,
+                    course_id: courseId
+                  };
+              
+                  try {
+                    const response = await fetch('http://127.0.0.1:5001/api/v1/post_courses_to_user', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify(data),
+                    });
+              
+                    if (!response.ok) {
+                      const errorData = await response.json();
+                      console.error('Error:', errorData.error);
+                      throw new Error(errorData.error);
+                    }
+              
+                    return await response.json();
+                  } catch (error) {
+                    console.error('Error adding course:', error);
+                    throw error;
+                  }
+                }
+              });
+              
+              console.error('Error:', errorData.error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: errorData.error,
+              });
+            } else {
+              const result = await response.json();
+              await Swal.fire({
+                icon: 'success',
+                title: 'Course Added Successfully!',
+                text: 'Go to Dashoboard to view your course.',
+              }).then(() => {
+                // Redirect or perform further actions as needed
+                window.location.href = '{{url_for("main.dashboard")}}';
+              });
+              console.log('Course added:', result);
+            }
+          } catch (error) {
+            console.error('Error adding course:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Error adding course.',
+            });
+          }
+        }
+      });
+      
+  </script>
+{% endblock %}
