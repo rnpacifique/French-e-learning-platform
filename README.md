@@ -25,7 +25,26 @@ User-Friendly Interface: A clean and intuitive interface makes it easy for users
 Getting Started
 Prerequisites
 Web browser (Google Chrome, Firefox, etc.)
+Internet connection
+Installation
+Clone the repository:
+bash
+Copy code
+git clone https://github.com/rnpacifique/french-e-learning-platform.git
+Navigate to the project directory:
+bash
+Copy code
+cd french-e-learning-platform.git
+Install the required dependencies:
+bash
+Copy code
+pip install -r requirements.txt
+Run the application:
+bash
+Copy code
+python app.py
 Open your browser and go to http://localhost:5000 to start using Academia Franco.
+
 
 Contribution
 Contributions are welcome! If you have suggestions for new features or improvements, feel free to create a pull request or open an issue.
